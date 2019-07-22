@@ -9,23 +9,26 @@ function bubble(x, y, speed) {
   }
   this.display = function() {
     fill("cyan");
-    circle(this.x, 720 - this.y, this.size);
+    circle(this.x, windowHeight - this.y, this.size);
   }
 }
 
 function setup() {
-  createCanvas(1280, 720);
+  createCanvas(windowWidth, windowHeight);
   frameRate(30);
   noStroke();
 }
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
 function draw() {
   for (i = 0; i < 4; i++) {
-    bubbles.push(new bubble(random(0, 1820), -100, random(2, 8)));
+    bubbles.push(new bubble(random(0, windowWidth), -100, random(2, 8)));
   }
 
   background(220, 220, 220);
   for (i = 0; i < bubbles.length; i++) {
-    if (bubbles[i].y + bubbles[i].size > 800) {
+    if (bubbles[i].y + bubbles[i].size > windowHeight + 100) {
       bubbles.splice(i, 1);
     }
     bubbles[i].move();

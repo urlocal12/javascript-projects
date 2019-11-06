@@ -23,6 +23,7 @@ function setup() {
   r2.style("width", sliderWidth + "px");
   g2.style("width", sliderWidth + "px");
   b2.style("width", sliderWidth + "px");
+  alert("Press SPACE to toggle slider visibility");
 }
 
 function windowResized() {

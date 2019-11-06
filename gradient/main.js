@@ -25,6 +25,10 @@ function setup() {
   b2.style("width", sliderWidth + "px");
 }
 
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
+
 function draw() {
   for (i = 0; i <= width; i++) {
     if (r1.value() < r2.value()) var r = (r1.value() - r2.value()) / width * i + r1.value();

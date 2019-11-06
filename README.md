@@ -8,3 +8,7 @@ These are just some of my projects. Do whatever you want here.
 ### Snake Game
 * [Link](https://onlineexp.github.io/javascript-projects/snake/)
 * About 1 hour
+
+### Gradient
+* [Link](https://onlineexp.github.io/javascript-projects/gradient/)
+* About 30 minutes

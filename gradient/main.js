@@ -32,12 +32,9 @@ function windowResized() {
 
 function draw() {
   for (i = 0; i <= width; i++) {
-    if (r1.value() < r2.value()) var r = (r1.value() - r2.value()) / width * i + r1.value();
-    else var r = (r1.value() - r2.value()) / width * i + r2.value();
-    if (g1.value() < g2.value()) var g = (g1.value() - g2.value()) / width * i + g1.value();
-    else var g = (g1.value() - g2.value()) / width * i + g2.value();
-    if (b1.value() < b2.value()) var b = (b1.value() - b2.value()) / width * i + b1.value();
-    else var b = (b1.value() - b2.value()) / width * i + b2.value();
+    var r = abs(r1.value() - r2.value()) / width * i + r1.value();
+    var g = abs(g1.value() - g2.value()) / width * i + g1.value();
+    var b = abs(b1.value() - b2.value()) / width * i + b1.value();
     stroke(r, g, b);
     line(i, 0, i, height);
   }

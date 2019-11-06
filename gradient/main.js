@@ -1,16 +1,29 @@
 var slidersHidden = false;
 
+function load(r1, g1, b1, r2, g2, b2) {
+  for (i = 0; i <= width; i++) {
+    if (r1 < r2) var r = abs(r1 - r2) / width * i + r1;
+    else var r = (r1 - r2) / width * i * -1 + r1;
+    if (g1 < g2) var g = abs(g1 - g2) / width * i + g1;
+    else var g = (g1 - g2) / width * i * -1 + g1;
+    if (b1 < b2) var b = abs(b1 - b2) / width * i + b1;
+    else var b = (b1 - b2) / width * i * -1 + b1;
+    stroke(r, g, b);
+    line(i, 0, i, height);
+  }
+}
+
 function setup() {
   var canvas = createCanvas(windowWidth, windowHeight);
   canvas.style('display', 'block');
   frameRate(30);
   var sliderWidth = 200;
-  r1 = createSlider(0, 255, 0);
-  g1 = createSlider(0, 255, 0);
-  b1 = createSlider(0, 255, 0);
-  r2 = createSlider(0, 255, 255);
-  g2 = createSlider(0, 255, 255);
-  b2 = createSlider(0, 255, 255);
+  r1 = createSlider(0, 255, random(255));
+  g1 = createSlider(0, 255, random(255));
+  b1 = createSlider(0, 255, random(255));
+  r2 = createSlider(0, 255, random(255));
+  g2 = createSlider(0, 255, random(255));
+  b2 = createSlider(0, 255, random(255));
   r1.position(10, 10);
   g1.position(10, 40);
   b1.position(10, 70);
@@ -23,7 +36,9 @@ function setup() {
   r2.style("width", sliderWidth + "px");
   g2.style("width", sliderWidth + "px");
   b2.style("width", sliderWidth + "px");
-  alert("Press SPACE to toggle slider visibility");
+  
+  load(r1.value(), g1.value(), b1.value(), r2.value(), g2.value(), b2.value());
+  setTimeout(function() { alert("Press SPACE to toggle slider visibility") }, 0);
 }
 
 function windowResized() {
@@ -34,16 +49,7 @@ function windowResized() {
 }
 
 function draw() {
-  for (i = 0; i <= width; i++) {
-    if (r1.value() < r2.value()) var r = abs(r1.value() - r2.value()) / width * i + r1.value();
-    else var r = (r1.value() - r2.value()) / width * i * -1 + r1.value();
-    if (g1.value() < g2.value()) var g = abs(g1.value() - g2.value()) / width * i + g1.value();
-    else var g = (g1.value() - g2.value()) / width * i * -1 + g1.value();
-    if (b1.value() < b2.value()) var b = abs(b1.value() - b2.value()) / width * i + b1.value();
-    else var b = (b1.value() - b2.value()) / width * i * -1 + b1.value();
-    stroke(r, g, b);
-    line(i, 0, i, height);
-  }
+  load(r1.value(), g1.value(), b1.value(), r2.value(), g2.value(), b2.value());
 }
 
 function keyPressed() {

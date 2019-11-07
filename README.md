@@ -11,4 +11,4 @@ These are just some of my projects. Do whatever you want here.
 
 ### Gradient
 * [Link](https://onlineexp.github.io/javascript-projects/gradient/)
-* About 1 hour
+* About 2 hours

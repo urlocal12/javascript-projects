@@ -1,8 +1,9 @@
 var sliders = [];
-var colors = [];
+var c = [];
 var slidersHidden = false;
-var textPlace;
-var sliderWidth = 200;
+var hintY;
+var sliderWidth = 255;
+var textY = 160;
 
 function load(r1, g1, b1, r2, g2, b2, startX, endX) {
   for (i = 0; i <= endX - startX; i++) {
@@ -20,7 +21,7 @@ function load(r1, g1, b1, r2, g2, b2, startX, endX) {
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
   frameRate(30);
-  textPlace = height / 2;
+  hintY = height / 2;
   for (i = 0; i < 9; i++) sliders.push(createSlider(0, 255, random(0, 255)));
   sliders[0].position(100, 50);
   sliders[1].position(100, 80);
@@ -39,30 +40,36 @@ function windowResized() {
   sliders[3].position(width / 2 - sliderWidth / 2, 50);
   sliders[4].position(width / 2 - sliderWidth / 2, 80);
   sliders[5].position(width / 2 - sliderWidth / 2, 110);
-  sliders[6].position(windowWidth - 100 - sliderWidth, 50);
-  sliders[7].position(windowWidth - 100 - sliderWidth, 80);
-  sliders[8].position(windowWidth - 100 - sliderWidth, 110);
+  sliders[6].position(width - 100 - sliderWidth, 50);
+  sliders[7].position(width - 100 - sliderWidth, 80);
+  sliders[8].position(width - 100 - sliderWidth, 110);
 }
 
 function draw() {
-  for (i = 0; i < 9; i++) colors[i] = sliders[i].value();
-  load(colors[0], colors[1], colors[2], colors[3], colors[4], colors[5], 0, width / 2);
-  load(colors[3], colors[4], colors[5], colors[6], colors[7], colors[8], width / 2 + 1, width);
+  for (i = 0; i < 9; i++) c[i] = sliders[i].value();
+  load(c[0], c[1], c[2], c[3], c[4], c[5], 0, width / 2);
+  load(c[3], c[4], c[5], c[6], c[7], c[8], width / 2 + 1, width);
   textSize(32);
   stroke("black");
   textAlign(CENTER, CENTER);
-  text("Press SPACE to toggle slider visibility", width / 2, textPlace);
+  text("Press SPACE to toggle settings visibility", width / 2, hintY);
+  textSize(24);
+  text("R: " + c[0] + " G: " + c[1] + " B: " + c[2], 100 + sliderWidth / 2, textY);
+  text("R: " + c[3] + " G: " + c[4] + " B: " + c[5], width / 2, textY);
+  text("R: " + c[6] + " G: " + c[7] + " B: " + c[8], width - 100 - sliderWidth / 2, textY);
 }
 
 function keyPressed() {
   if (keyCode === 32) {
-    textPlace -= height;
+    hintY -= height;
     if (slidersHidden == true) {
       for (i = 0; i < 9; i++) sliders[i].show();
       slidersHidden = false;
+      textY = 160;
     } else {
       for (i = 0; i < 9; i++) sliders[i].hide();
       slidersHidden = true;
+      textY = -100;
     }
   }
 }

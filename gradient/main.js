@@ -1,77 +1,67 @@
+var sliders = [];
+var colors = [];
 var slidersHidden = false;
-var textPlace = 100;
+var textPlace;
+var sliderWidth = 200;
 
-function load(r1, g1, b1, r2, g2, b2) {
-  for (i = 0; i <= width; i++) {
-    if (r1 < r2) var r = abs(r1 - r2) / width * i + r1;
-    else var r = (r1 - r2) / width * i * -1 + r1;
-    if (g1 < g2) var g = abs(g1 - g2) / width * i + g1;
-    else var g = (g1 - g2) / width * i * -1 + g1;
-    if (b1 < b2) var b = abs(b1 - b2) / width * i + b1;
-    else var b = (b1 - b2) / width * i * -1 + b1;
+function load(r1, g1, b1, r2, g2, b2, startX, endX) {
+  for (i = 0; i <= endX - startX; i++) {
+    if (r1 < r2) var r = (r2 - r1) / (endX - startX) * i + r1;
+    else var r = r1 - ((r1 - r2) / (endX - startX) * i);
+    if (g1 < g2) var g = (g2 - g1) / (endX - startX) * i + g1;
+    else var g = g1 - ((g1 - g2) / (endX - startX) * i);
+    if (b1 < b2) var b = (b2 - b1) / (endX - startX) * i + b1;
+    else var b = b1 - ((b1 - b2) / (endX - startX) * i);
     stroke(r, g, b);
-    line(i, 0, i, height);
+    line(i + startX, 0, i + startX, height);
   }
 }
 
 function setup() {
-  var canvas = createCanvas(windowWidth, windowHeight);
-  canvas.style('display', 'block');
+  canvas = createCanvas(windowWidth, windowHeight);
   frameRate(30);
-  var sliderWidth = 200;
-  r1 = createSlider(0, 255, random(255));
-  g1 = createSlider(0, 255, random(255));
-  b1 = createSlider(0, 255, random(255));
-  r2 = createSlider(0, 255, random(255));
-  g2 = createSlider(0, 255, random(255));
-  b2 = createSlider(0, 255, random(255));
-  r1.position(100, 50);
-  g1.position(100, 80);
-  b1.position(100, 110);
-  r2.position(width - 100 - sliderWidth, 50);
-  g2.position(width - 100 - sliderWidth, 80);
-  b2.position(width - 100 - sliderWidth, 110);
-  r1.style("width", sliderWidth + "px");
-  g1.style("width", sliderWidth + "px");
-  b1.style("width", sliderWidth + "px");
-  r2.style("width", sliderWidth + "px");
-  g2.style("width", sliderWidth + "px");
-  b2.style("width", sliderWidth + "px");
+  textPlace = height / 2;
+  for (i = 0; i < 9; i++) sliders.push(createSlider(0, 255, random(0, 255)));
+  sliders[0].position(100, 50);
+  sliders[1].position(100, 80);
+  sliders[2].position(100, 110);
+  sliders[3].position(width / 2 - sliderWidth / 2, 50);
+  sliders[4].position(width / 2 - sliderWidth / 2, 80);
+  sliders[5].position(width / 2 - sliderWidth / 2, 110);
+  sliders[6].position(width - 100 - sliderWidth, 50);
+  sliders[7].position(width - 100 - sliderWidth, 80);
+  sliders[8].position(width - 100 - sliderWidth, 110);
+  for (i = 0; i < 9; i++) sliders[i].style("width", sliderWidth + "px");
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  r2.position(windowWidth - 10 - sliderWidth, 10);
-  g2.position(windowWidth - 10 - sliderWidth, 40);
-  b2.position(windowWidth - 10 - sliderWidth, 70);
+  sliders[3].position(width / 2 - sliderWidth / 2, 50);
+  sliders[4].position(width / 2 - sliderWidth / 2, 80);
+  sliders[5].position(width / 2 - sliderWidth / 2, 110);
+  sliders[6].position(windowWidth - 100 - sliderWidth, 50);
+  sliders[7].position(windowWidth - 100 - sliderWidth, 80);
+  sliders[8].position(windowWidth - 100 - sliderWidth, 110);
 }
 
 function draw() {
-  load(r1.value(), g1.value(), b1.value(), r2.value(), g2.value(), b2.value());
+  for (i = 0; i < 9; i++) colors[i] = sliders[i].value();
+  load(colors[0], colors[1], colors[2], colors[3], colors[4], colors[5], 0, width / 2);
+  load(colors[3], colors[4], colors[5], colors[6], colors[7], colors[8], width / 2 + 1, width);
   textSize(32);
   stroke("black");
   textAlign(CENTER, CENTER);
-  var helpText = text("Press SPACE to toggle slider visibility", width / 2, textPlace);
+  text("Press SPACE to toggle slider visibility", width / 2, textPlace);
 }
 
 function keyPressed() {
-  textPlace = height * 10;
   if (keyCode === 32) {
+    textPlace -= height;
     if (slidersHidden == true) {
-      r1.show();
-      g1.show();
-      b1.show();
-      r2.show();
-      g2.show();
-      b2.show();
+      for (i = 0; i < 9; i++) sliders[i].show();
       slidersHidden = false;
     } else {
-      r1.hide();
-      g1.hide();
-      b1.hide();
-      r2.hide();
-      g2.hide();
-      b2.hide();
+      for (i = 0; i < 9; i++) sliders[i].hide();
       slidersHidden = true;
     }
   }

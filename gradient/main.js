@@ -92,7 +92,7 @@ function keyPressed() {
     hintY -= height;
     if (slidersHidden == true) {
       for (i = 0; i < 9; i++) {
-        if (i >= 3 && i <= 6 && twoColors) continue;
+        if (i >= 3 && i < 6 && twoColors) continue;
         sliders[i].show();
       }
       middleToggler.show();

@@ -2,12 +2,17 @@ var sliders = [];
 var c = [];
 var middleToggler;
 var mTogSize = 200;
-var twoColors = false;
+var twoColors = true;
 var slidersHidden = false;
 var hintY;
 var sliderWidth = 255;
 var textY = 160;
-var middleTextY = 160;
+var middleTextY = -100;
+var JPGsaveButton;
+var PNGsaveButton;
+var savePNG = false;
+var saveJPG = false;
+var saveButtonSize = 200;
 
 function load(r1, g1, b1, r2, g2, b2, startX, endX) {
   for (i = 0; i <= endX - startX; i++) {
@@ -35,6 +40,14 @@ function toggleNumOfColors() {
   }
 }
 
+function saveAsJPG() {
+  saveJPG = true;
+}
+
+function saveAsPNG() {
+  savePNG = true;
+}
+
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
   frameRate(30);
@@ -44,8 +57,19 @@ function setup() {
   middleToggler.style("border", "none");
   middleToggler.style("font-size", "20px");
   middleToggler.mousePressed(toggleNumOfColors);
+  JPGsaveButton = createButton("Save Image as JPG");
+  PNGsaveButton = createButton("Save Image as PNG");
+  JPGsaveButton.position(width / 2 - saveButtonSize / 2 + 5, 310);
+  PNGsaveButton.position(width / 2 - saveButtonSize / 2 + 5, 275);
+  JPGsaveButton.style("border", "none");
+  PNGsaveButton.style("border", "none");
+  JPGsaveButton.style("font-size", "20px");
+  PNGsaveButton.style("font-size", "20px");
+  JPGsaveButton.mousePressed(saveAsJPG);
+  PNGsaveButton.mousePressed(saveAsPNG);
   hintY = height / 2;
   for (i = 0; i < 9; i++) sliders.push(createSlider(0, 255, random(0, 255)));
+  for (i = 3; i < 6; i++) sliders[i].hide();
   sliders[0].position(100, 50);
   sliders[1].position(100, 80);
   sliders[2].position(100, 110);
@@ -67,6 +91,8 @@ function windowResized() {
   sliders[7].position(width - 100 - sliderWidth, 80);
   sliders[8].position(width - 100 - sliderWidth, 110);
   middleToggler.position(width / 2 - mTogSize / 2, 200);
+  JPGsaveButton.position(width / 2 - saveButtonSize / 2 + 5, 310);
+  PNGsaveButton.position(width / 2 - saveButtonSize / 2 + 5, 275);
 }
 
 function draw() {
@@ -76,6 +102,13 @@ function draw() {
   } else {
     load(c[0], c[1], c[2], c[3], c[4], c[5], 0, width / 2);
     load(c[3], c[4], c[5], c[6], c[7], c[8], width / 2 + 1, width);
+  }
+  if (savePNG) {
+    save("gradient.png");
+    savePNG = false;
+  } if (saveJPG) {
+    save("gradient.jpg");
+    saveJPG = false;
   }
   textSize(32);
   stroke("black");
@@ -99,12 +132,16 @@ function keyPressed() {
       slidersHidden = false;
       textY = 160;
       if (!twoColors) middleTextY = 160;
+      PNGsaveButton.show();
+      JPGsaveButton.show();
     } else {
       for (i = 0; i < 9; i++) sliders[i].hide();
       middleToggler.hide();
       slidersHidden = true;
       textY = -100;
       middleTextY = -100;
+      PNGsaveButton.hide();
+      JPGsaveButton.hide();
     }
   }
 }

@@ -67,7 +67,7 @@ function setup() {
   PNGsaveButton.style("font-size", "20px");
   JPGsaveButton.mousePressed(saveAsJPG);
   PNGsaveButton.mousePressed(saveAsPNG);
-  hintY = height / 2;
+  hintY = height / 2 + 100;
   for (i = 0; i < 9; i++) sliders.push(createSlider(0, 255, random(0, 255)));
   for (i = 3; i < 6; i++) sliders[i].hide();
   sliders[0].position(100, 50);

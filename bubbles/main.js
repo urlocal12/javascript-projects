@@ -8,7 +8,7 @@ function bubble(x, y, speed) {
     this.y += this.speed;
   }
   this.display = function() {
-    fill("cyan");
+    fill(0, 60, 255);
     circle(this.x, windowHeight - this.y, this.size);
   }
 }
@@ -26,7 +26,7 @@ function draw() {
     bubbles.push(new bubble(random(0, windowWidth), -100, random(2, 8)));
   }
 
-  background(220, 220, 220);
+  background(200, 200, 200);
   for (i = 0; i < bubbles.length; i++) {
     if (bubbles[i].y + bubbles[i].size > windowHeight + 100) {
       bubbles.splice(i, 1);
